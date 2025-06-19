@@ -1,30 +1,41 @@
 'use client';
-import { useEffect } from 'react';
-import lenis from '@/lib/lenis';
+import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import AnimatedSection from '@/components/sections/AnimatedSection';
-
+import Lenis from 'lenis';
 export default function ContactPage() {
-  const pathname = usePathname();
+	const pathname = usePathname();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    lenis.start();
-  }, [pathname]);
+	const lenisRef = useRef<Lenis>(null);
 
-  useEffect(() => {
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-  }, []);
+	useEffect(() => {
+		const lenis = new Lenis({
+			duration: 1.2,
+			easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+		});
 
-  return (
-    <>
-      <AnimatedSection title="Contact Us" desc="Get in touch with our team." />
-      <AnimatedSection title="Follow Us" desc="Check out our social media handles." />
-      <AnimatedSection title="Careers" desc="Join the animation revolution." />
-    </>
-  );
+		lenisRef.current = lenis;
+
+		const raf = (time: number) => {
+			lenis.raf(time);
+			requestAnimationFrame(raf);
+		};
+
+		requestAnimationFrame(raf);
+		lenis.scrollTo(0); // scroll to top
+		return () => {
+			lenis.destroy();
+		};
+	}, [pathname]);
+
+	return (
+		<>
+			<AnimatedSection title='Contact Us' desc='Get in touch with our team.' />
+			<AnimatedSection
+				title='Follow Us'
+				desc='Check out our social media handles.'
+			/>
+			<AnimatedSection title='Careers' desc='Join the animation revolution.' />
+		</>
+	);
 }

@@ -1,24 +1,33 @@
 'use client';
-import { useEffect } from 'react';
-import lenis from '@/lib/lenis';
+
+import { useEffect, useRef } from 'react';
+import Lenis from 'lenis';
 import { usePathname } from 'next/navigation';
 import AnimatedSection from '@/components/sections/AnimatedSection';
 
 export default function AboutPage() {
 	const pathname = usePathname();
+	const lenisRef = useRef<Lenis>(null);
 
 	useEffect(() => {
-		window.scrollTo(0, 0);
-		lenis.start();
-	}, [pathname]);
+		const lenis = new Lenis({
+			duration: 1.2,
+			easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+		});
 
-	useEffect(() => {
-		function raf(time: number) {
+		lenisRef.current = lenis;
+
+		const raf = (time: number) => {
 			lenis.raf(time);
 			requestAnimationFrame(raf);
-		}
+		};
+
 		requestAnimationFrame(raf);
-	}, []);
+		lenis.scrollTo(0); // scroll to top
+		return () => {
+			lenis.destroy();
+		};
+	}, [pathname]);
 
 	return (
 		<>
