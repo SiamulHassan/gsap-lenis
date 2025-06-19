@@ -4,7 +4,7 @@ import lenis from '@/lib/lenis';
 import { usePathname } from 'next/navigation';
 import AnimatedSection from '@/components/sections/AnimatedSection';
 
-export default function HomePage() {
+export default function AboutPage() {
 	const pathname = usePathname();
 
 	useEffect(() => {
@@ -22,14 +22,14 @@ export default function HomePage() {
 
 	return (
 		<>
-			<AnimatedSection title='Welcome Home' desc='This is the home page.' />
+			<AnimatedSection title='About Us' desc='We love smooth animations.' />
 			<AnimatedSection
-				title='Our Mission'
-				desc='Animating with GSAP and Lenis.'
+				title='Our Team'
+				desc='Meet the creators of this demo.'
 			/>
 			<AnimatedSection
-				title='Get Started'
-				desc='Use this setup to learn scroll animations.'
+				title='Our Vision'
+				desc='To animate the web beautifully.'
 			/>
 		</>
 	);
