@@ -1,4 +1,4 @@
-import { Container, ExplicitImplicit, GridLayout } from '@/components';
+import { AutoFitFill, Container, ExplicitImplicit, GridLayout } from '@/components';
 import React from 'react';
 
 const page = () => {
@@ -24,6 +24,8 @@ const page = () => {
 	const renderClass = (index: number) => layoutClasses[index] || '';
 	return (
 		<div className='main flex flex-col gap-4'>
+			{/* practice 4 */}
+			<AutoFitFill />
 			{/* practice 3 */}
 			<ExplicitImplicit />
 			{/* practice 2 */}
