@@ -1,8 +1,15 @@
 'use client';
-import React, { createContext, useContext, useState } from 'react';
+import React, {
+	createContext,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 import { IoMdClose } from 'react-icons/io';
 import { createPortal } from 'react-dom';
 import { Button } from '../Buttons';
+import { useClickOutside } from '@/hooks/useClickOutside';
 type ModalProps = {
 	children: React.ReactNode;
 	onClose?: any;
@@ -38,10 +45,12 @@ const Window = ({
 	name: string;
 }) => {
 	const { openName, close } = useModal();
+	const ref = useClickOutside(close);
+
 	if (name !== openName) return null;
 	return createPortal(
 		<ModalOverlay>
-			<ModalCentered>
+			<ModalCentered ref={ref}>
 				<Button onClick={close}>
 					<IoMdClose />
 				</Button>
@@ -68,9 +77,12 @@ Modal.Window = Window;
 export default Modal;
 
 // Css
-const ModalCentered = ({ children }: any) => {
+const ModalCentered = ({ children, ref }: any) => {
 	return (
-		<div className='fixed top-1/2 left-1/2 -translate-1/2 bg-amber-100 rounded-md shadow-2xl px-[2.5rem] py-[1.5rem] transition-all duration-75'>
+		<div
+			ref={ref}
+			className='fixed top-1/2 left-1/2 -translate-1/2 bg-amber-100 rounded-md shadow-2xl px-[2.5rem] py-[1.5rem] transition-all duration-75'
+		>
 			{children}
 		</div>
 	);
