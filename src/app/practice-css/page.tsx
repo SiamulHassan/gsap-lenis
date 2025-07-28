@@ -1,7 +1,15 @@
-import { AutoFitFill, Container, ExplicitImplicit, GridLayout } from '@/components';
+import {
+	AutoFitFill,
+	Button,
+	Container,
+	ExplicitImplicit,
+	GridLayout,
+	Modal,
+} from '@/components';
+import { useModal } from '@/components/Modal/Modal';
 import React from 'react';
 
-const page = () => {
+const Page = () => {
 	// const renderClass = (index: number) => {
 	// 	switch (index >= 1) {
 	// 		case index === 1:
@@ -20,10 +28,21 @@ const page = () => {
 		3: 'col-[2/3] row-[2/3]',
 		4: 'col-[3/-1] row-[1/-1]',
 	};
-
+	// our open is a function for setOpenName
+	const { open }: any = useModal();
 	const renderClass = (index: number) => layoutClasses[index] || '';
 	return (
 		<div className='main flex flex-col gap-4'>
+			{/* practice 5 */}
+			<Modal>
+				<Modal.Open>
+					<Button onClick={() => open('from')}>Open Form</Button>
+				</Modal.Open>
+
+				<Modal.Window name='form'>
+					<div>Contents</div>
+				</Modal.Window>
+			</Modal>
 			{/* practice 4 */}
 			<AutoFitFill />
 			{/* practice 3 */}
@@ -45,7 +64,7 @@ const page = () => {
 	);
 };
 
-export default page;
+export default Page;
 
 //////////////////// optimized solutions
 // const layoutClasses = {
