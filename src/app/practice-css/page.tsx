@@ -37,7 +37,7 @@ const Page = () => {
 			<div className='mt-[80px]'>
 				<Modal>
 					<Modal.Open>
-						<OpenFormButton openName='form' btnName='Openn' />
+						<OpenFormButton PropBtn={Button} openName='form' btnName='Openn' />
 					</Modal.Open>
 
 					<Modal.Window name='form'>

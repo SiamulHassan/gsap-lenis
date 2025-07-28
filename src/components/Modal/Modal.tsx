@@ -85,10 +85,12 @@ const ModalOverlay = ({ children }: any) => {
 export const OpenFormButton = ({
 	openName,
 	btnName,
+	PropBtn,
 }: {
 	openName: string;
 	btnName: string;
+	PropBtn: any;
 }) => {
 	const { open } = useModal();
-	return <Button onClick={() => open(openName)}>{btnName}</Button>;
+	return <PropBtn onClick={() => open(openName)}>{btnName}</PropBtn>;
 };
