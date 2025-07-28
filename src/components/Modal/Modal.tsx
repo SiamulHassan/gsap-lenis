@@ -1,11 +1,8 @@
-import React, {
-	cloneElement,
-	createContext,
-	useContext,
-	useState,
-} from 'react';
-import { Button } from '../Buttons';
+'use client';
+import React, { createContext, useContext, useState } from 'react';
+import { IoMdClose } from 'react-icons/io';
 import { createPortal } from 'react-dom';
+import { Button } from '../Buttons';
 type ModalProps = {
 	children: React.ReactNode;
 	onClose?: any;
@@ -40,28 +37,25 @@ const Window = ({
 	children: React.ReactNode;
 	name: string;
 }) => {
-	const { openName } = useModal();
-	// const { openName }: any = useContext(ModalContext);
+	const { openName, close } = useModal();
 	if (name !== openName) return null;
 	return createPortal(
 		<ModalOverlay>
-			<ModalCentered>{children}</ModalCentered>
+			<ModalCentered>
+				<Button onClick={close}>
+					<IoMdClose />
+				</Button>
+				{children}
+			</ModalCentered>
 		</ModalOverlay>,
 		document.body
 	);
 };
 
-// Open Btn old : if we were to use cloning
-// const Open = ({ children, opens: openWindowName }: any) => {
-// 	const { open } = useModal();
-// 	// const { open }: any = useContext(ModalContext);
-// 	return cloneElement(children, { onClick: () => open(openWindowName) });
-// };
 const Open = ({ children }: { children: React.ReactNode }) => {
 	return children;
 };
-//////////////////// Alternative of cling the btn. which I will use cause cloing is not the efficient way (react doc and jonas both said. But jonas did not refactored this)
-/////// Here we are using a custom hook for exposing the context values
+
 export const useModal = () => {
 	const context = useContext(ModalContext);
 	if (!context) throw new Error('useModal must be used within <Modal>');
@@ -87,4 +81,14 @@ const ModalOverlay = ({ children }: any) => {
 			{children}
 		</div>
 	);
+};
+export const OpenFormButton = ({
+	openName,
+	btnName,
+}: {
+	openName: string;
+	btnName: string;
+}) => {
+	const { open } = useModal();
+	return <Button onClick={() => open(openName)}>{btnName}</Button>;
 };
