@@ -7,6 +7,7 @@ import {
 	GridLayout,
 	Modal,
 } from '@/components';
+import Masonary from '@/components/masionary-grid/MasonaryGrid';
 import { OpenFormButton, useModal } from '@/components/Modal/Modal';
 import React from 'react';
 
@@ -33,6 +34,10 @@ const Page = () => {
 	const renderClass = (index: number) => layoutClasses[index] || '';
 	return (
 		<div className='main flex flex-col gap-4'>
+			{/* practice 6 */}
+			<Container>
+				<Masonary />
+			</Container>
 			{/* practice 5 */}
 			<div className='mt-[80px]'>
 				<Modal>
